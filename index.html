@@ -1,0 +1,576 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080d17">
+<title>TermuxX - Mobile Terminal</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: #080d17;
+    color: #e8edf7;
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+}
+
+nav {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 17px 7%;
+    background: rgba(8,13,23,.95);
+    border-bottom: 1px solid #202b3d;
+}
+
+.logo {
+    font-size: 23px;
+    font-weight: 900;
+    color: #46e6a1;
+}
+
+nav a {
+    color: #b7c2d4;
+    text-decoration: none;
+    margin-left: 17px;
+    font-size: 13px;
+}
+
+nav a:hover {
+    color: #46e6a1;
+}
+
+.hero {
+    text-align: center;
+    padding: 90px 20px 75px;
+    background:
+    radial-gradient(ellipse at top, #123c37 0%, transparent 65%);
+}
+
+.tag {
+    display: inline-block;
+    padding: 6px 13px;
+    border: 1px solid #236b55;
+    border-radius: 30px;
+    color: #46e6a1;
+    font-size: 12px;
+    margin-bottom: 22px;
+}
+
+.hero h1 {
+    font-size: clamp(40px, 8vw, 75px);
+    line-height: 1.1;
+    margin-bottom: 20px;
+}
+
+.green {
+    color: #46e6a1;
+}
+
+.hero p {
+    max-width: 600px;
+    margin: auto;
+    color: #9aa8bc;
+    font-size: 16px;
+}
+
+.buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 13px;
+    margin-top: 30px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 14px 23px;
+    border-radius: 9px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: .2s;
+    cursor: pointer;
+    border: none;
+    font-size: 14px;
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+}
+
+.primary {
+    background: #46e6a1;
+    color: #07130e;
+}
+
+.secondary {
+    border: 1px solid #34435a;
+    color: white;
+    background: #111c2c;
+}
+
+section {
+    padding: 65px 7%;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 32px;
+    margin-bottom: 12px;
+}
+
+.section-desc {
+    color: #8e9cb1;
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+    gap: 17px;
+}
+
+.card {
+    padding: 25px;
+    background: #101a29;
+    border: 1px solid #253348;
+    border-radius: 13px;
+    transition: .2s;
+}
+
+.card:hover {
+    border-color: #46e6a1;
+    transform: translateY(-4px);
+}
+
+.card h3 {
+    margin: 12px 0 8px;
+}
+
+.card p {
+    color: #96a5b9;
+    font-size: 14px;
+}
+
+.card .btn {
+    margin-top: 18px;
+}
+
+.emoji {
+    font-size: 28px;
+}
+
+.terminal {
+    background: #050a11;
+    border: 1px solid #29394a;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-top: 25px;
+}
+
+.terminal-header {
+    padding: 12px 16px;
+    background: #172333;
+    color: #9eafc3;
+    font-size: 13px;
+}
+
+.terminal pre {
+    padding: 22px;
+    overflow-x: auto;
+    color: #46e6a1;
+    font-size: 13px;
+    white-space: pre-wrap;
+}
+
+.version {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    align-items: center;
+    padding: 17px;
+    background: #101a29;
+    border: 1px solid #253348;
+    border-radius: 10px;
+    margin: 12px 0;
+}
+
+.version small {
+    color: #91a1b6;
+}
+
+.status {
+    color: #46e6a1;
+    font-size: 12px;
+}
+
+.package-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(130px,1fr));
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.package {
+    background: #172536;
+    padding: 12px;
+    border-radius: 8px;
+    color: #46e6a1;
+    font-family: monospace;
+    text-align: center;
+}
+
+details {
+    background: #101a29;
+    padding: 18px;
+    margin: 10px 0;
+    border: 1px solid #253348;
+    border-radius: 9px;
+}
+
+summary {
+    cursor: pointer;
+    font-weight: bold;
+}
+
+details p {
+    color: #9ba9bd;
+    margin-top: 12px;
+}
+
+footer {
+    border-top: 1px solid #253348;
+    text-align: center;
+    padding: 35px 15px;
+    color: #7f8da2;
+    font-size: 13px;
+}
+
+footer a {
+    color: #46e6a1;
+    text-decoration: none;
+}
+
+@media(max-width:600px) {
+    nav {
+        padding: 14px 5%;
+    }
+
+    nav a {
+        margin-left: 8px;
+        font-size: 11px;
+    }
+
+    section {
+        padding: 50px 5%;
+    }
+
+    .hero {
+        padding-top: 65px;
+    }
+
+    .version {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+    <div class="logo">TermuxX.</div>
+    <div>
+        <a href="#downloads">Downloads</a>
+        <a href="#features">Features</a>
+        <a href="#versions">Versions</a>
+    </div>
+</nav>
+
+<header class="hero">
+    <div class="tag">MOBILE TERMINAL ENVIRONMENT</div>
+
+    <h1>
+        Your phone.<br>
+        Your <span class="green">terminal.</span>
+    </h1>
+
+    <p>
+        A mobile terminal experience with powerful tools,
+        customizable packages and a simple installation guide.
+    </p>
+
+    <div class="buttons">
+        <a class="btn primary" href="#downloads">
+            Download now ↓
+        </a>
+
+        <a class="btn secondary" href="#features">
+            Explore features
+        </a>
+    </div>
+</header>
+
+<section id="downloads">
+    <h2 class="section-title">Downloads</h2>
+    <p class="section-desc">
+        Choose your mobile operating system.
+    </p>
+
+    <div class="grid">
+
+        <div class="card">
+            <div class="emoji">🤖</div>
+            <h3>Android</h3>
+            <p>
+                Install the official Termux terminal
+                and customize it with your favorite packages.
+            </p>
+
+            <a class="btn primary"
+               href="https://f-droid.org/packages/com.termux/"
+               target="_blank">
+                Download Termux
+            </a>
+
+            <br>
+
+            <a class="btn secondary"
+               href="https://github.com/termux/termux-app/releases"
+               target="_blank">
+                GitHub Releases
+            </a>
+        </div>
+
+        <div class="card">
+            <div class="emoji">🍎</div>
+            <h3>iOS / iPhone</h3>
+            <p>
+                Termux is Android-only. iPhone users
+                can use iSH, a separate Linux-like terminal.
+            </p>
+
+            <a class="btn primary"
+               href="https://ish.app/"
+               target="_blank">
+                Get iSH
+            </a>
+        </div>
+
+    </div>
+</section>
+
+<section id="features">
+    <h2 class="section-title">Features</h2>
+    <p class="section-desc">
+        Make your mobile terminal your own.
+    </p>
+
+    <div class="grid">
+
+        <div class="card">
+            <div class="emoji">⌨️</div>
+            <h3>Terminal access</h3>
+            <p>Use a Linux-style command line directly from your phone.</p>
+        </div>
+
+        <div class="card">
+            <div class="emoji">📦</div>
+            <h3>Package manager</h3>
+            <p>Install and update supported packages using pkg and apt.</p>
+        </div>
+
+        <div class="card">
+            <div class="emoji">🐍</div>
+            <h3>Python</h3>
+            <p>Write and run Python projects on your mobile device.</p>
+        </div>
+
+        <div class="card">
+            <div class="emoji">🔧</div>
+            <h3>Customization</h3>
+            <p>Build your own terminal setup with your preferred tools.</p>
+        </div>
+
+        <div class="card">
+            <div class="emoji">🌐</div>
+            <h3>Networking</h3>
+            <p>Use supported networking and SSH utilities.</p>
+        </div>
+
+        <div class="card">
+            <div class="emoji">📱</div>
+            <h3>Mobile optimized</h3>
+            <p>Designed to look good on small screens and larger devices.</p>
+        </div>
+
+    </div>
+</section>
+
+<section>
+    <h2 class="section-title">Quick installation</h2>
+    <p class="section-desc">
+        Get started with your terminal.
+    </p>
+
+    <div class="terminal">
+        <div class="terminal-header">
+            ● ● ● &nbsp; Termux installation
+        </div>
+
+        <pre>
+$ pkg update && pkg upgrade
+
+$ pkg install git python nano curl wget
+
+$ python --version
+
+$ git --version
+        </pre>
+    </div>
+
+    <p class="section-desc" style="margin-top:20px">
+        Open Termux and run these commands one at a time.
+    </p>
+</section>
+
+<section>
+    <h2 class="section-title">Included packages</h2>
+    <p class="section-desc">
+        Example package selection for your custom setup.
+    </p>
+
+    <div class="package-list">
+        <div class="package">Python</div>
+        <div class="package">Git</div>
+        <div class="package">Nano</div>
+        <div class="package">Curl</div>
+        <div class="package">Wget</div>
+        <div class="package">OpenSSH</div>
+        <div class="package">Clang</div>
+    </div>
+
+    <div class="buttons">
+        <button class="btn primary" onclick="copyInstaller()">
+            Copy installer commands
+        </button>
+    </div>
+</section>
+
+<section id="versions">
+    <h2 class="section-title">Versions</h2>
+    <p class="section-desc">
+        Check the official project for the newest releases.
+    </p>
+
+    <div class="version">
+        <div>
+            <h3>Termux Stable</h3>
+            <small>Official Android release channel</small>
+        </div>
+        <span class="status">Official</span>
+    </div>
+
+    <div class="version">
+        <div>
+            <h3>Termux Beta</h3>
+            <small>Experimental releases where available</small>
+        </div>
+        <span class="status">Experimental</span>
+    </div>
+
+    <div class="version">
+        <div>
+            <h3>Termux GitHub</h3>
+            <small>Official source code and release history</small>
+        </div>
+        <a href="https://github.com/termux/termux-app/releases"
+           class="btn secondary" target="_blank">
+            View releases
+        </a>
+    </div>
+</section>
+
+<section>
+    <h2 class="section-title">FAQ</h2>
+
+    <details>
+        <summary>Is Termux free?</summary>
+        <p>Yes. Termux is free and open-source software.</p>
+    </details>
+
+    <details>
+        <summary>Can I use this on iPhone?</summary>
+        <p>
+            The original Termux application is Android-only.
+            iPhone users can explore iSH as an alternative.
+        </p>
+    </details>
+
+    <details>
+        <summary>Does this install all packages automatically?</summary>
+        <p>
+            No. The website provides installation commands.
+            You must first install the terminal application.
+            The commands then install your selected packages.
+        </p>
+    </details>
+
+    <details>
+        <summary>Can I install my own tools?</summary>
+        <p>
+            Yes. You can customize your package list
+            and create your own installer script.
+        </p>
+    </details>
+
+</section>
+
+<footer>
+    <h2 class="logo">TermuxX.</h2>
+    <p>Built for mobile terminal enthusiasts.</p>
+    <p style="margin-top:12px">
+        This is an independent project and is not affiliated
+        with the official Termux developers.
+    </p>
+    <p style="margin-top:12px">
+        <a href="https://github.com/termux/termux-app">
+            Official Termux GitHub
+        </a>
+    </p>
+    <p style="margin-top:15px">
+        © 2026 TermuxX. All rights reserved.
+    </p>
+</footer>
+
+<script>
+function copyInstaller() {
+    const commands = `pkg update && pkg upgrade -y
+pkg install git python nano curl wget openssh clang -y`;
+
+    navigator.clipboard.writeText(commands)
+        .then(() => alert("Installer commands copied!"))
+        .catch(() => alert("Clipboard unavailable. Copy the commands manually."));
+}
+</script>
+
+</body>
+</html>
